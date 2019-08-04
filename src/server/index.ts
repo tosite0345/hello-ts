@@ -1,27 +1,29 @@
 import Express from 'express'
+import cors from 'cors'
 
 const app = Express()
+app.use(cors())
 
 // Routing
 
 app.get('/', (req, res) => {
-    const data = { message: 'pong' }
+    const data = {message: 'pong'}
     res.send(data)
 })
 
-app.get('/rest', (req, res) => {
-    res.send('GET request')
-})
-app.post('/rest', (req, res) => {
-    res.send('POST request')
-})
-app.put('/rest', (req, res) => {
-    res.send('PUT request')
-})
-app.delete('/rest', (req, res) => {
-    res.send('DELETE request')
+app.use((req, res, next) => {
+    res.sendStatus(404)
+    next({statusCode: 404})
 })
 
+app.use((
+    err: { statusCode: number },
+    req: Express.Request,
+    res: Express.Response,
+    next: Express.NextFunction
+) => {
+    console.log(err.statusCode)
+})
 
 // boot Express
 const port = 8888
