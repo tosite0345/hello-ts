@@ -1,4 +1,5 @@
 import Express from 'express'
+import {Ping} from '../types/api'
 import cors from 'cors'
 
 const app = Express()
@@ -7,7 +8,7 @@ app.use(cors())
 // Routing
 
 app.get('/', (req, res) => {
-    const data = {message: 'pong'}
+    const data: Ping = {message: 'pong'}
     res.send(data)
 })
 
